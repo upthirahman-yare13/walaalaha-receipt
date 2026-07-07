@@ -1,48 +1,466 @@
-import React from 'react';
+<!DOCTYPE html>
+<html lang="so">
+<head>
+<meta charset="UTF-8">
+<title>Walaalaha — Rasiidka</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,500&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0f1114;
+    --card:#15181d;
+    --card-2:#1c2027;
+    --gold:#cda238;
+    --gold-light:#e9caa0;
+    --gold-dim:#8a7038;
+    --cream:#f3ecdc;
+    --cream-dim:#c9c2b0;
+    --page-bg:#e9e4d8;
+    --line:rgba(205,162,56,0.35);
+  }
 
-// TypeScript interface for Props
-interface BillingCardProps {
-  receiptId: string;
-  date: string;
-}
+  *{ box-sizing:border-box; }
 
-const WalaalahaCard: React.FC<BillingCardProps> = ({ receiptId, date }) => {
-  return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-4">
-      {/* Card Container - Cabbirka 85mm x 55mm (Standard Card) */}
-      <div className="w-[85mm] h-[55mm] bg-white border border-gray-200 shadow-xl rounded-lg p-6 flex flex-col justify-between relative overflow-hidden">
-        
-        {/* Header */}
-        <div className="text-center">
-          <h1 className="text-xl font-serif font-bold tracking-widest text-gray-900">WALAALAHA</h1>
-          <p className="text-[8px] uppercase tracking-tighter text-gray-400">Premium Dining</p>
-        </div>
+  body{
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    background:
+      radial-gradient(circle at 20% 10%, rgba(0,0,0,0.04), transparent 40%),
+      var(--page-bg);
+    color:var(--ink);
+    min-height:100vh;
+    padding:32px 16px 80px;
+  }
 
-        {/* Content Area */}
-        <div className="flex flex-col gap-3 my-2">
-          <div className="flex justify-between border-b border-gray-100 pb-1">
-            <span className="text-[10px] text-gray-500 uppercase">Tirada Dadka</span>
-            <span className="w-16 border-b border-dashed border-black"></span>
-          </div>
-          <div className="flex justify-between border-b border-gray-100 pb-1">
-            <span className="text-[10px] text-gray-500 uppercase">Wadarta Guud</span>
-            <span className="font-bold text-lg">$ _________</span>
-          </div>
-        </div>
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:360px 1fr;
+    gap:36px;
+    align-items:start;
+  }
 
-        {/* Footer */}
-        <div className="text-center">
-          <p className="text-[7px] text-gray-400">Date: {date} | Rasiid #: {receiptId}</p>
-          <p className="text-[8px] font-medium mt-1">Mahadsanidiin Soo Booqashadaada</p>
-        </div>
+  @media (max-width:860px){
+    .wrap{ grid-template-columns:1fr; }
+  }
 
-        {/* Decorative element */}
-        <div className="absolute top-0 right-0 w-16 h-16 bg-gray-50 rounded-bl-full -mr-4 -mt-4 opacity-50"></div>
+  /* ---------- Control panel ---------- */
+  .panel{
+    background:#fffdf8;
+    border:1px solid #ddd6c4;
+    border-radius:14px;
+    padding:26px 24px 28px;
+    position:sticky;
+    top:24px;
+  }
+  .panel h1{
+    font-family:'Playfair Display',serif;
+    font-size:20px;
+    margin:0 0 4px;
+    letter-spacing:0.02em;
+  }
+  .panel .sub{
+    font-size:12.5px;
+    color:#7c7563;
+    margin:0 0 22px;
+  }
+  .field{ margin-bottom:16px; }
+  .field label{
+    display:block;
+    font-size:12px;
+    font-weight:500;
+    color:#5c5541;
+    margin-bottom:6px;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+  }
+  .field input, .field select, .field textarea{
+    width:100%;
+    padding:10px 12px;
+    border:1px solid #d8d1bd;
+    border-radius:8px;
+    font-family:'Poppins',sans-serif;
+    font-size:14.5px;
+    background:#fff;
+    color:#22201a;
+  }
+  .field textarea{ resize:vertical; min-height:56px; }
+  .field input:focus, .field select:focus, .field textarea:focus{
+    outline:none;
+    border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(205,162,56,0.18);
+  }
+  .row2{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+
+  .btns{ display:flex; gap:10px; margin-top:22px; }
+  button{
+    flex:1;
+    padding:12px 14px;
+    border-radius:9px;
+    font-family:'Poppins',sans-serif;
+    font-size:14px;
+    font-weight:500;
+    cursor:pointer;
+    border:1px solid transparent;
+    transition:transform .08s ease, opacity .15s ease;
+  }
+  button:active{ transform:scale(0.98); }
+  .btn-primary{
+    background:#1c2027;
+    color:var(--gold-light);
+    border-color:#1c2027;
+  }
+  .btn-primary:hover{ opacity:0.92; }
+  .btn-secondary{
+    background:#fff;
+    color:#3c3628;
+    border-color:#d8d1bd;
+  }
+  .btn-secondary:hover{ background:#f6f2e6; }
+
+  .hint{
+    margin-top:16px;
+    font-size:11.5px;
+    color:#96907d;
+    line-height:1.6;
+    border-top:1px dashed #ddd6c4;
+    padding-top:14px;
+  }
+
+  /* ---------- Receipt card ---------- */
+  .stage{
+    display:flex;
+    justify-content:center;
+  }
+
+  #receipt{
+    width:460px;
+    max-width:100%;
+    background:
+      radial-gradient(circle at 85% 0%, rgba(205,162,56,0.08), transparent 55%),
+      linear-gradient(180deg, var(--card) 0%, #101318 100%);
+    border-radius:18px;
+    padding:38px 34px 30px;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,0.45), 0 4px 18px rgba(0,0,0,0.2);
+    position:relative;
+    color:var(--cream);
+    border:1px solid #26241b;
+  }
+
+  .brand{ text-align:center; margin-bottom:18px; }
+  .brand .name{
+    font-family:'Playfair Display',serif;
+    font-weight:700;
+    font-size:32px;
+    letter-spacing:0.14em;
+    color:var(--gold-light);
+    margin:0;
+    background:linear-gradient(180deg, var(--gold-light), var(--gold));
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+  .brand .cutlery{
+    width:34px; height:34px; margin:6px auto 8px;
+    display:block;
+  }
+  .brand .tagline{
+    font-size:13px;
+    letter-spacing:0.06em;
+    color:var(--gold-light);
+    margin:2px 0 0;
+    font-weight:500;
+  }
+  .brand .loc{
+    font-size:12px;
+    color:var(--cream-dim);
+    margin:2px 0 0;
+    letter-spacing:0.03em;
+  }
+
+  .divider{
+    height:1px;
+    margin:18px 0 22px;
+    background:linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity:0.65;
+  }
+
+  .stats{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+    margin-bottom:22px;
+  }
+  .stat-box{
+    border:1px solid var(--gold-dim);
+    border-radius:12px;
+    overflow:hidden;
+    background:#171a20;
+  }
+  .stat-label{
+    font-size:12.5px;
+    letter-spacing:0.03em;
+    color:var(--gold-light);
+    padding:12px 14px 10px;
+    font-weight:500;
+  }
+  .stat-value{
+    background:linear-gradient(180deg, #dcb668, var(--gold));
+    color:#1a1408;
+    text-align:center;
+    padding:18px 8px 20px;
+    font-family:'Cormorant Garamond',serif;
+    font-weight:700;
+    font-size:40px;
+    line-height:1;
+  }
+  .stat-value.money{
+    font-size:29px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:2px;
+  }
+  .stat-value.money .cur{
+    font-size:14px;
+    font-weight:600;
+    letter-spacing:0.08em;
+  }
+
+  .items{
+    margin:0 0 20px;
+    border-top:1px dashed rgba(243,236,220,0.18);
+    padding-top:14px;
+  }
+  .items .item-row{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    font-size:13px;
+    color:var(--cream-dim);
+    padding:4px 0;
+  }
+  .items .item-row span:last-child{ color:var(--cream); font-weight:500; }
+
+  .thanks{
+    text-align:center;
+    font-family:'Cormorant Garamond',serif;
+    font-size:18px;
+    font-weight:600;
+    color:var(--cream);
+    margin:0 0 4px;
+    line-height:1.4;
+  }
+  .thanks .brandname{ color:var(--gold-light); }
+
+  .footer-line{
+    border-top:1px solid rgba(205,162,56,0.25);
+    margin-top:20px;
+    padding-top:12px;
+    display:flex;
+    justify-content:space-between;
+    font-size:11px;
+    color:var(--cream-dim);
+    letter-spacing:0.02em;
+  }
+  .footer-line b{ color:var(--gold-light); font-weight:500; }
+
+  .stamp{
+    position:absolute;
+    bottom:26px;
+    right:30px;
+    width:16px;height:16px;
+    opacity:0.7;
+  }
+
+  @media print{
+    body{
+      background:#fff;
+      padding:0;
+      min-height:auto;
+    }
+    .panel, .hint{ display:none !important; }
+    .wrap{ display:block; }
+    .stage{ display:block; }
+    #receipt{
+      box-shadow:none;
+      margin:20px auto;
+      -webkit-print-color-adjust:exact;
+      print-color-adjust:exact;
+    }
+    @page{ margin:0.4in; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- CONTROL PANEL -->
+  <div class="panel">
+    <h1>Samee Rasiidka</h1>
+    <p class="sub">Buuxi macluumaadka hoose — rasiidku wuu isbedelayaa isla markiiba.</p>
+
+    <div class="field">
+      <label for="guestCount">Tirada Dadka</label>
+      <input type="number" id="guestCount" min="1" value="2">
+    </div>
+
+    <div class="field">
+      <label for="totalAmount">Wadarta Lacunay (USD)</label>
+      <input type="number" id="totalAmount" min="0" step="0.01" value="55.00">
+    </div>
+
+    <div class="field">
+      <label for="itemsList">Alaabta (ikhtiyaari — mid kasta xariiq gooni ah)</label>
+      <textarea id="itemsList" placeholder="Tusaale: 2x Muufo &amp; Suqaar&#10;1x Cabitaan">2x Muufo &amp; Suqaar
+1x Cabitaan Dabeecad ah</textarea>
+    </div>
+
+    <div class="row2">
+      <div class="field">
+        <label for="receiptDate">Taariikhda</label>
+        <input type="date" id="receiptDate">
+      </div>
+      <div class="field">
+        <label for="receiptId">Rasiid #</label>
+        <input type="text" id="receiptId">
       </div>
     </div>
-  );
-};
 
-export default function App() {
-  return <WalaalahaCard receiptId="W-2026-001" date="07/07/2026" />;
-}
+    <div class="btns">
+      <button class="btn-secondary" id="newIdBtn" type="button">Rasiid Cusub</button>
+      <button class="btn-primary" id="printBtn" type="button">Print / PDF</button>
+    </div>
+
+    <p class="hint">
+      Riixidda "Print / PDF" ayaa kuu furaysa daaqadda daabacaadda — dooro "Save as PDF" haddii aad rabto file PDF ah. Rasiidku wuxuu si toos ah isugu qurxinayaa marka aad wax bedesho.
+    </p>
+  </div>
+
+  <!-- RECEIPT -->
+  <div class="stage">
+    <div id="receipt">
+      <div class="brand">
+        <p class="name">WALAALAHA</p>
+        <svg class="cutlery" viewBox="0 0 64 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 2v8a3 3 0 0 0 3 3v9" stroke="#cda238" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M4 2v6M7 2v6M10 2v6" stroke="#cda238" stroke-width="1.4" stroke-linecap="round"/>
+          <line x1="24" y1="2" x2="40" y2="18" stroke="#cda238" stroke-width="1.4" stroke-linecap="round"/>
+          <line x1="40" y1="2" x2="24" y2="18" stroke="#cda238" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M56 2c-4 3-4 9 0 11s0 8 0 9" stroke="#cda238" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+        </svg>
+        <p class="tagline">Premium Dining</p>
+        <p class="loc">Muqdisho, Soomaaliya</p>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="stats">
+        <div class="stat-box">
+          <div class="stat-label">Tirada Dadka</div>
+          <div class="stat-value" id="outGuests">2</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Wadarta Lacunay</div>
+          <div class="stat-value money"><span id="outTotal">55.00</span><span class="cur">USD</span></div>
+        </div>
+      </div>
+
+      <div class="items" id="outItemsWrap">
+        <!-- item rows injected here -->
+      </div>
+
+      <p class="thanks">Mahadsanidiin Soo Booqashadaada! –<br><span class="brandname">Walaalaha</span></p>
+
+      <div class="footer-line">
+        <span>Taariikh: <b id="outDate">--</b></span>
+        <span>Rasiid #: <b id="outId">--</b></span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var guestEl = document.getElementById('guestCount');
+  var totalEl = document.getElementById('totalAmount');
+  var itemsEl = document.getElementById('itemsList');
+  var dateEl = document.getElementById('receiptDate');
+  var idEl = document.getElementById('receiptId');
+
+  var outGuests = document.getElementById('outGuests');
+  var outTotal = document.getElementById('outTotal');
+  var outDate = document.getElementById('outDate');
+  var outId = document.getElementById('outId');
+  var outItemsWrap = document.getElementById('outItemsWrap');
+
+  function fmtDate(d){
+    var months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    var parts=d.split('-');
+    if(parts.length!==3) return d;
+    return parseInt(parts[2],10)+" "+months[parseInt(parts[1],10)-1]+" "+parts[0];
+  }
+
+  function nextReceiptId(){
+    var n = parseInt(localStorage.getItem('walaalaha_receipt_seq')||'1000',10);
+    n += 1;
+    localStorage.setItem('walaalaha_receipt_seq', String(n));
+    return 'WLH-'+n;
+  }
+
+  function render(){
+    var guests = parseInt(guestEl.value,10);
+    if(isNaN(guests)||guests<1) guests=1;
+    outGuests.textContent = guests;
+
+    var total = parseFloat(totalEl.value);
+    if(isNaN(total)||total<0) total=0;
+    outTotal.textContent = total.toFixed(2);
+
+    outDate.textContent = dateEl.value ? fmtDate(dateEl.value) : '--';
+    outId.textContent = idEl.value || '--';
+
+    var lines = itemsEl.value.split('\n').map(function(l){return l.trim();}).filter(Boolean);
+    outItemsWrap.innerHTML='';
+    lines.forEach(function(line){
+      var row=document.createElement('div');
+      row.className='item-row';
+      var m = line.match(/^(.*?)([\$][\d.,]+)$/);
+      if(m){
+        row.innerHTML = '<span>'+m[1].trim()+'</span><span>'+m[2].trim()+'</span>';
+      } else {
+        row.innerHTML = '<span>'+line+'</span><span></span>';
+      }
+      outItemsWrap.appendChild(row);
+    });
+  }
+
+  [guestEl,totalEl,itemsEl,dateEl,idEl].forEach(function(el){
+    el.addEventListener('input', render);
+  });
+
+  document.getElementById('newIdBtn').addEventListener('click', function(){
+    idEl.value = nextReceiptId();
+    render();
+  });
+
+  document.getElementById('printBtn').addEventListener('click', function(){
+    window.print();
+  });
+
+  // init defaults
+  var today = new Date();
+  var iso = today.toISOString().slice(0,10);
+  dateEl.value = iso;
+  idEl.value = nextReceiptId();
+  render();
+})();
+</script>
+
+</body>
+  </html>
