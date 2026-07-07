@@ -1,26 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="so">
 <head>
     <style>
-        body { font-family: 'Helvetica', sans-serif; width: 80mm; padding: 10px; }
-        .header { text-align: center; border-bottom: 1px dashed #000; margin-bottom: 10px; }
-        .items { width: 100%; margin-top: 10px; }
-        .total { text-align: right; font-weight: bold; border-top: 1px solid #000; margin-top: 10px; }
-        @media print { body { width: 80mm; } }
+        /* Card Size: 60mm x 80mm (Aad u gaaban) */
+        @page { size: 60mm 80mm; margin: 2mm; }
+        body { 
+            font-family: 'Helvetica', sans-serif; 
+            width: 60mm; 
+            margin: 0 auto; 
+            text-align: center;
+            border: 2px solid #000; /* Xariiq kaar u eg */
+            padding: 10px;
+        }
+        .logo { font-size: 18px; font-weight: bold; margin-bottom: 5px; text-transform: uppercase; }
+        .date { font-size: 8px; color: #555; margin-bottom: 15px; }
+        .field { margin: 10px 0; border-bottom: 1px dashed #000; padding: 5px; font-size: 12px; }
+        .total-label { font-size: 10px; text-transform: uppercase; margin-top: 10px; }
+        .total-val { font-size: 20px; font-weight: bold; margin-top: 5px; }
+        .footer { font-size: 7px; margin-top: 15px; color: #777; }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>Maqaayadaha Walaalaha</h1>
-        <p>Mogadishu, Somalia</p>
-    </div>
-    <table class="items">
-        <tr><td>Bariis & Hilib</td><td>1x</td><td>$5.00</td></tr>
-        <tr><td>Shaah</td><td>2x</td><td>$1.00</td></tr>
-    </table>
-    <div class="total">
-        <p>Grand Total: $6.00</p>
-    </div>
-    <p style="text-align: center; font-size: 10px;">Mahadsanidiin soo booqashadaada!</p>
+    <div class="logo">Walaalaha</div>
+    <div class="date" id="date"></div>
+    
+    <div class="field">Dadka: _________</div>
+    
+    <div class="total-label">Wadarta Guud</div>
+    <div class="total-val">$ _________</div>
+    
+    <div class="footer">Mahadsanidiin soo booqashadaada</div>
+
+    <script>
+        document.getElementById('date').textContent = new Date().toLocaleDateString();
+    </script>
 </body>
 </html>
