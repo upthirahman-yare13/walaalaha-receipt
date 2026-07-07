@@ -1,38 +1,158 @@
 <!DOCTYPE html>
 <html lang="so">
 <head>
+    <meta charset="UTF-8">
+    <title>Walaalaha | Premium Bill</title>
     <style>
-        /* Card Size: 60mm x 80mm (Aad u gaaban) */
-        @page { size: 60mm 80mm; margin: 2mm; }
-        body { 
-            font-family: 'Helvetica', sans-serif; 
-            width: 60mm; 
-            margin: 0 auto; 
-            text-align: center;
-            border: 2px solid #000; /* Xariiq kaar u eg */
-            padding: 10px;
+        /* Cabbirka Kaarka yar (Small Card Size - 70mm x 90mm) */
+        @page {
+            size: 70mm 90mm;
+            margin: 2mm;
         }
-        .logo { font-size: 18px; font-weight: bold; margin-bottom: 5px; text-transform: uppercase; }
-        .date { font-size: 8px; color: #555; margin-bottom: 15px; }
-        .field { margin: 10px 0; border-bottom: 1px dashed #000; padding: 5px; font-size: 12px; }
-        .total-label { font-size: 10px; text-transform: uppercase; margin-top: 10px; }
-        .total-val { font-size: 20px; font-weight: bold; margin-top: 5px; }
-        .footer { font-size: 7px; margin-top: 15px; color: #777; }
+
+        body {
+            font-family: 'Helvetica Neue', sans-serif;
+            width: 70mm;
+            margin: 0 auto;
+            padding: 5px;
+            background-color: #fff;
+            color: #000;
+            box-sizing: border-box;
+        }
+
+        /* Header-ka Premium */
+        .prem-header {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .prem-logo {
+            font-size: 24px; /* Magaca Walaalaha oo waaweyn */
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 2px;
+            font-family: 'Georgia', serif; /* Font classic ah */
+            color: #1a1a1a;
+        }
+
+        .prem-tagline {
+            font-size: 9px;
+            color: #666;
+            text-transform: uppercase;
+        }
+
+        .meta-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 8px;
+            color: #888;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 2px;
+        }
+
+        /* Qaybta Macluumaadka Muhiimka ah */
+        .main-data-box {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            gap: 5px;
+        }
+
+        .data-card {
+            flex: 1;
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+            background-color: #f9f9f9;
+        }
+
+        .data-label {
+            font-size: 8px;
+            text-transform: uppercase;
+            color: #777;
+            margin-bottom: 5px;
+        }
+
+        .data-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #000;
+            min-height: 25px; /* Si meesha loogu qoro */
+        }
+
+        /* Total-ka Madow */
+        .prem-total-box {
+            background-color: #1a1a1a; /* Madow */
+            color: #fff; /* Caddaan */
+            text-align: center;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+
+        .total-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            opacity: 0.8;
+        }
+
+        .total-amount {
+            font-size: 32px; /* Wadarta oo aad u waaweyn */
+            font-weight: bold;
+        }
+
+        .prem-footer {
+            text-align: center;
+            font-size: 8px;
+            color: #aaa;
+            border-top: 1px solid #eee;
+            padding-top: 5px;
+        }
+
+        /* Print Adjustments */
+        @media print {
+            body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .data-card { background-color: #f9f9f9 !important; }
+            .prem-total-box { background-color: #1a1a1a !important; }
+        }
     </style>
 </head>
 <body>
-    <div class="logo">Walaalaha</div>
-    <div class="date" id="date"></div>
-    
-    <div class="field">Dadka: _________</div>
-    
-    <div class="total-label">Wadarta Guud</div>
-    <div class="total-val">$ _________</div>
-    
-    <div class="footer">Mahadsanidiin soo booqashadaada</div>
+
+    <div class="prem-header">
+        <div class="prem-logo">Walaalaha</div>
+        <div class="prem-tagline">Premium Dining</div>
+    </div>
+
+    <div class="meta-info">
+        <span>Taariikh: <span id="js-date"></span></span>
+        <span>Rasiid #: <span id="js-id">001</span></span>
+    </div>
+
+    <div class="main-data-box">
+        <div class="data-card">
+            <div class="data-label">Tirada Dadka</div>
+            <div class="data-value">______</div> <!-- Qofka ayaa qoraya ama systemka ayaa soo saaraya -->
+        </div>
+    </div>
+
+    <div class="prem-total-box">
+        <div class="total-label">Wadarta Guud</div>
+        <div class="total-amount">$ ______</div>
+    </div>
+
+    <div class="prem-footer">
+        Mahadsanidiin Soo Booqashadaada!
+    </div>
 
     <script>
-        document.getElementById('date').textContent = new Date().toLocaleDateString();
+        // Taariikhda otomaatiga ah
+        document.getElementById('js-date').textContent = new Date().toLocaleDateString('en-GB');
+        // Optional: Generate a unique ID for JS
+        // document.getElementById('js-id').textContent = Math.floor(Math.random() * 10000);
     </script>
+
 </body>
 </html>
