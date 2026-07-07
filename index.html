@@ -276,6 +276,86 @@
     opacity:0.7;
   }
 
+  #receipt::before, #receipt::after{
+    content:"";
+    position:absolute;
+    width:22px; height:22px;
+    border:1px solid var(--gold);
+    opacity:0.55;
+  }
+  #receipt::before{ top:14px; left:14px; border-right:none; border-bottom:none; }
+  #receipt::after{ bottom:14px; right:14px; border-left:none; border-top:none; }
+
+  .mode-toggle{
+    display:flex;
+    border:1px solid #d8d1bd;
+    border-radius:9px;
+    overflow:hidden;
+  }
+  .mode-btn{
+    flex:1;
+    padding:10px 8px;
+    background:#fff;
+    border:none;
+    font-family:'Poppins',sans-serif;
+    font-size:12.5px;
+    font-weight:500;
+    color:#6b6450;
+    cursor:pointer;
+    border-radius:0;
+  }
+  .mode-btn + .mode-btn{ border-left:1px solid #d8d1bd; }
+  .mode-btn.active{
+    background:#1c2027;
+    color:var(--gold-light);
+  }
+
+  #receipt.blank .stat-value{
+    background:#171a20;
+    color:transparent;
+    min-height:70px;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    padding-bottom:10px;
+  }
+  #receipt.blank .stat-value::after{
+    content:"";
+    display:block;
+    width:70%;
+    height:1px;
+    background:rgba(233,202,160,0.45);
+  }
+  #receipt.blank .stat-value.money .cur{ display:none; }
+  #receipt.blank .items{ display:none; }
+  #receipt.blank .footer-line b{
+    color:transparent;
+    border-bottom:1px solid rgba(233,202,160,0.45);
+    min-width:70px;
+    display:inline-block;
+  }
+
+  #printSheet{
+    display:flex;
+    justify-content:center;
+  }
+  .receipt-slot{ display:flex; justify-content:center; }
+
+  @media print{
+    #printSheet.copies-2, #printSheet.copies-4{
+      display:grid;
+      gap:14px;
+    }
+    #printSheet.copies-2{ grid-template-columns:1fr 1fr; }
+    #printSheet.copies-4{ grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; }
+    #printSheet.copies-2 #receipt, #printSheet.copies-4 #receipt{
+      width:100%;
+      padding:26px 22px 20px;
+    }
+    #printSheet.copies-2 .brand .name, #printSheet.copies-4 .brand .name{ font-size:24px; }
+    #printSheet.copies-2 .stat-value, #printSheet.copies-4 .stat-value{ font-size:30px; padding:12px 8px 14px; }
+  }
+
   @media print{
     body{
       background:#fff;
@@ -331,54 +411,76 @@
       </div>
     </div>
 
+    <div class="field" style="margin-top:22px;">
+      <label>Nooca Daabacaada</label>
+      <div class="mode-toggle">
+        <button type="button" class="mode-btn active" id="modeFilled">Buuxsan (Digital)</button>
+        <button type="button" class="mode-btn" id="modeBlank">Bannaan (Qalin)</button>
+      </div>
+    </div>
+
+    <div class="field" id="copiesField" style="display:none;">
+      <label for="copiesCount">Tirada Card-ka Bogga (Print)</label>
+      <select id="copiesCount">
+        <option value="1">1 card bog</option>
+        <option value="2">2 card bog</option>
+        <option value="4" selected>4 card bog</option>
+      </select>
+    </div>
+
     <div class="btns">
       <button class="btn-secondary" id="newIdBtn" type="button">Rasiid Cusub</button>
       <button class="btn-primary" id="printBtn" type="button">Print / PDF</button>
     </div>
 
     <p class="hint">
-      Riixidda "Print / PDF" ayaa kuu furaysa daaqadda daabacaadda — dooro "Save as PDF" haddii aad rabto file PDF ah. Rasiidku wuxuu si toos ah isugu qurxinayaa marka aad wax bedesho.
+      <b>Buuxsan:</b> tirooyinka waxaad ka buuxin kartaa bogga bidix, rasiidkuna si toos ah ayuu isu qurxinayaa.<br>
+      <b>Bannaan:</b> waxaad daabacaysaa card madhan oo qurxoon si aad qalin ugu qorto tirada dadka iyo wadarta — waana ku habboon dukaanka/maqaaxida in la diyaariyo kaydka card-ka.
     </p>
   </div>
 
   <!-- RECEIPT -->
   <div class="stage">
-    <div id="receipt">
-      <div class="brand">
-        <p class="name">WALAALAHA</p>
-        <svg class="cutlery" viewBox="0 0 64 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4 2v8a3 3 0 0 0 3 3v9" stroke="#cda238" stroke-width="1.4" stroke-linecap="round"/>
-          <path d="M4 2v6M7 2v6M10 2v6" stroke="#cda238" stroke-width="1.4" stroke-linecap="round"/>
-          <line x1="24" y1="2" x2="40" y2="18" stroke="#cda238" stroke-width="1.4" stroke-linecap="round"/>
-          <line x1="40" y1="2" x2="24" y2="18" stroke="#cda238" stroke-width="1.4" stroke-linecap="round"/>
-          <path d="M56 2c-4 3-4 9 0 11s0 8 0 9" stroke="#cda238" stroke-width="1.4" stroke-linecap="round" fill="none"/>
-        </svg>
-        <p class="tagline">Premium Dining</p>
-        <p class="loc">Muqdisho, Soomaaliya</p>
-      </div>
+    <div id="printSheet">
+      <div class="receipt-slot">
+        <div id="receipt">
+          <div class="brand">
+            <p class="name">WALAALAHA</p>
+            <svg class="cutlery" viewBox="0 0 64 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 2v8a3 3 0 0 0 3 3v9" stroke="#cda238" stroke-width="1.4" stroke-linecap="round"/>
+              <path d="M4 2v6M7 2v6M10 2v6" stroke="#cda238" stroke-width="1.4" stroke-linecap="round"/>
+              <line x1="24" y1="2" x2="40" y2="18" stroke="#cda238" stroke-width="1.4" stroke-linecap="round"/>
+              <line x1="40" y1="2" x2="24" y2="18" stroke="#cda238" stroke-width="1.4" stroke-linecap="round"/>
+              <path d="M56 2c-4 3-4 9 0 11s0 8 0 9" stroke="#cda238" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+            </svg>
+            <p class="tagline">Premium Dining</p>
+            <p class="loc">Muqdisho, Soomaaliya</p>
+          </div>
 
-      <div class="divider"></div>
+          <div class="divider"></div>
 
-      <div class="stats">
-        <div class="stat-box">
-          <div class="stat-label">Tirada Dadka</div>
-          <div class="stat-value" id="outGuests">2</div>
+          <div class="stats">
+            <div class="stat-box">
+              <div class="stat-label">Tirada Dadka</div>
+              <div class="stat-value" id="outGuests">2</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-label">Wadarta Lacunay</div>
+              <div class="stat-value money"><span id="outTotal">55.00</span><span class="cur">USD</span></div>
+            </div>
+          </div>
+
+          <div class="items" id="outItemsWrap">
+            <!-- item rows injected here -->
+          </div>
+
+          <p class="thanks">Mahadsanidiin Soo Booqashadaada! –<br><span class="brandname">Walaalaha</span></p>
+
+          <div class="footer-line">
+            <span>Taariikh: <b id="outDate">--</b></span>
+            <span>Rasiid #: <b id="outId">--</b></span>
+          </div>
         </div>
-        <div class="stat-box">
-          <div class="stat-label">Wadarta Lacunay</div>
-          <div class="stat-value money"><span id="outTotal">55.00</span><span class="cur">USD</span></div>
-        </div>
-      </div>
-
-      <div class="items" id="outItemsWrap">
-        <!-- item rows injected here -->
-      </div>
-
-      <p class="thanks">Mahadsanidiin Soo Booqashadaada! –<br><span class="brandname">Walaalaha</span></p>
-
-      <div class="footer-line">
-        <span>Taariikh: <b id="outDate">--</b></span>
-        <span>Rasiid #: <b id="outId">--</b></span>
       </div>
     </div>
   </div>
@@ -449,7 +551,38 @@
     render();
   });
 
+  var receiptEl = document.getElementById('receipt');
+  var printSheet = document.getElementById('printSheet');
+  var copiesField = document.getElementById('copiesField');
+  var copiesSelect = document.getElementById('copiesCount');
+  var modeFilledBtn = document.getElementById('modeFilled');
+  var modeBlankBtn = document.getElementById('modeBlank');
+  var isBlank = false;
+
+  function setMode(blank){
+    isBlank = blank;
+    receiptEl.classList.toggle('blank', blank);
+    modeFilledBtn.classList.toggle('active', !blank);
+    modeBlankBtn.classList.toggle('active', blank);
+    copiesField.style.display = blank ? 'block' : 'none';
+  }
+  modeFilledBtn.addEventListener('click', function(){ setMode(false); });
+  modeBlankBtn.addEventListener('click', function(){ setMode(true); });
+
   document.getElementById('printBtn').addEventListener('click', function(){
+    var slots = isBlank ? parseInt(copiesSelect.value,10) : 1;
+    printSheet.className = '';
+    if(slots > 1){
+      printSheet.classList.add('copies-'+slots);
+      var slot = printSheet.querySelector('.receipt-slot');
+      var extra = slots - printSheet.querySelectorAll('.receipt-slot').length;
+      for(var i=0;i<extra;i++){
+        printSheet.appendChild(slot.cloneNode(true));
+      }
+    } else {
+      var allSlots = printSheet.querySelectorAll('.receipt-slot');
+      for(var j=1;j<allSlots.length;j++){ allSlots[j].remove(); }
+    }
     window.print();
   });
 
@@ -463,4 +596,4 @@
 </script>
 
 </body>
-  </html>
+</html>
