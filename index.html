@@ -2,156 +2,243 @@
 <html lang="so">
 <head>
     <meta charset="UTF-8">
-    <title>Walaalaha | Premium Bill</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rasiidka Walaalaha - Premium Pro</title>
     <style>
-        /* Cabbirka Kaarka yar (Small Card Size - 70mm x 90mm) */
+        /* Cabbirka Warqadda (A6 - 105mm x 148mm) */
         @page {
-            size: 70mm 90mm;
-            margin: 2mm;
+            size: A6;
+            margin: 5mm;
         }
 
         body {
-            font-family: 'Helvetica Neue', sans-serif;
-            width: 70mm;
-            margin: 0 auto;
-            padding: 5px;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            color: #1a1a1a;
             background-color: #fff;
-            color: #000;
-            box-sizing: border-box;
+            line-height: 1.3;
         }
 
-        /* Header-ka Premium */
-        .prem-header {
+        /* Rasiid Container */
+        .receipt-container {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+            border: 2px solid #1a1a1a; /* Qaabka rasiidka oo muuqda */
+        }
+
+        /* Header */
+        .header {
             text-align: center;
+            border-bottom: 2px solid #1a1a1a;
+            padding-bottom: 5px;
             margin-bottom: 10px;
         }
 
-        .prem-logo {
-            font-size: 24px; /* Magaca Walaalaha oo waaweyn */
+        .logo-text {
+            font-family: 'Georgia', serif; /* Font classic ah oo qaali u eg */
+            font-size: 24px;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin-bottom: 2px;
-            font-family: 'Georgia', serif; /* Font classic ah */
-            color: #1a1a1a;
+            margin: 0;
+            color: #000;
         }
 
-        .prem-tagline {
-            font-size: 9px;
-            color: #666;
+        .tagline {
+            font-size: 10px;
             text-transform: uppercase;
+            color: #555;
+            margin: 2px 0 0 0;
         }
 
+        /* Meta Info (Taariikhda/ID) */
         .meta-info {
             display: flex;
             justify-content: space-between;
-            font-size: 8px;
-            color: #888;
-            margin-bottom: 15px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 2px;
-        }
-
-        /* Qaybta Macluumaadka Muhiimka ah */
-        .main-data-box {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 15px;
-            gap: 5px;
-        }
-
-        .data-card {
-            flex: 1;
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: center;
-            background-color: #f9f9f9;
-        }
-
-        .data-label {
-            font-size: 8px;
-            text-transform: uppercase;
-            color: #777;
-            margin-bottom: 5px;
-        }
-
-        .data-value {
-            font-size: 18px;
+            font-size: 10px;
+            margin-bottom: 10px;
             font-weight: bold;
-            color: #000;
-            min-height: 25px; /* Si meesha loogu qoro */
+            border-bottom: 1px solid #eee;
+            padding-bottom: 3px;
         }
+
+        /* Miiska Xisaabta */
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+            margin-bottom: 10px;
+        }
+
+        .items-table th {
+            border-bottom: 2px solid #1a1a1a;
+            text-align: left;
+            padding: 5px 2px;
+            text-transform: uppercase;
+            font-size: 9px;
+        }
+
+        .items-table td {
+            border-bottom: 1px dotted #ccc;
+            padding: 5px 2px;
+            vertical-align: top;
+        }
+
+        .col-qty { width: 10%; text-align: center; }
+        .col-item { width: 60%; }
+        .col-price { width: 30%; text-align: right; }
 
         /* Total-ka Madow */
-        .prem-total-box {
-            background-color: #1a1a1a; /* Madow */
-            color: #fff; /* Caddaan */
-            text-align: center;
-            padding: 15px;
+        .total-section {
+            width: 100%;
+            background-color: #1a1a1a;
+            color: #fff;
+            text-align: right;
+            padding: 8px;
+            box-sizing: border-box;
+            font-weight: bold;
             margin-bottom: 10px;
         }
 
         .total-label {
             font-size: 10px;
             text-transform: uppercase;
-            margin-bottom: 5px;
+            margin-bottom: 2px;
             opacity: 0.8;
         }
 
         .total-amount {
-            font-size: 32px; /* Wadarta oo aad u waaweyn */
+            font-size: 22px;
+            letter-spacing: 1px;
+        }
+
+        /* Tirada Dadka (Guest Count) - Wax yar ka duwan sidii hore, si ay ula jaanqaaddo naqshadda jaamka ah */
+        .guest-info {
+            text-align: center;
+            font-size: 11px;
+            margin-bottom: 10px;
             font-weight: bold;
         }
 
-        .prem-footer {
+        .guest-box {
+            display: inline-block;
+            border: 1px solid #1a1a1a;
+            padding: 3px 10px;
+            background-color: #f9f9f9;
+        }
+
+        /* Footer */
+        .footer {
             text-align: center;
-            font-size: 8px;
-            color: #aaa;
+            font-size: 9px;
+            color: #666;
             border-top: 1px solid #eee;
             padding-top: 5px;
         }
 
-        /* Print Adjustments */
+        /* Print-specific adjustments */
         @media print {
             body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            .data-card { background-color: #f9f9f9 !important; }
-            .prem-total-box { background-color: #1a1a1a !important; }
+            .receipt-container { border: none; padding: 0; } /* Border-ka ka saar print-ka */
         }
     </style>
 </head>
 <body>
 
-    <div class="prem-header">
-        <div class="prem-logo">Walaalaha</div>
-        <div class="prem-tagline">Premium Dining</div>
-    </div>
+    <div class="receipt-container">
+        <div class="header">
+            <h1 class="logo-text">WALAALAHA</h1>
+            <p class="tagline">Premium Dining</p>
+        </div>
 
-    <div class="meta-info">
-        <span>Taariikh: <span id="js-date"></span></span>
-        <span>Rasiid #: <span id="js-id">001</span></span>
-    </div>
+        <div class="meta-info">
+            <span>Taariikh: <span id="current-date"></span></span>
+            <span>Rasiid #: <span id="receipt-id">00124</span></span>
+        </div>
 
-    <div class="main-data-box">
-        <div class="data-card">
-            <div class="data-label">Tirada Dadka</div>
-            <div class="data-value">______</div> <!-- Qofka ayaa qoraya ama systemka ayaa soo saaraya -->
+        <!-- Miiska Xisaabta oo Dynamic ah -->
+        <table class="items-table">
+            <thead>
+                <tr>
+                    <th class="col-qty">Qty</th>
+                    <th class="col-item">Magaca Cuntada</th>
+                    <th class="col-price">Qiimaha</th>
+                </tr>
+            </thead>
+            <tbody id="items-body">
+                <!-- Javascript ayaa soo buuxinaysa xogta -->
+            </tbody>
+        </table>
+
+        <div class="guest-info">
+            <div class="guest-box">
+                Tirada Dadka: <span id="guest-count">2</span>
+            </div>
+        </div>
+
+        <div class="total-section">
+            <div class="total-label">Wadarta Guud</div>
+            <div class="total-amount" id="grand-total">$0.00</div>
+        </div>
+
+        <div class="footer">
+            <p>Mahadsanidiin Soo Booqashadaada! - Walaalaha</p>
+            <p>Cashier: Amiin | System Pro v1.2</p>
         </div>
     </div>
 
-    <div class="prem-total-box">
-        <div class="total-label">Wadarta Guud</div>
-        <div class="total-amount">$ ______</div>
-    </div>
-
-    <div class="prem-footer">
-        Mahadsanidiin Soo Booqashadaada!
-    </div>
-
     <script>
-        // Taariikhda otomaatiga ah
-        document.getElementById('js-date').textContent = new Date().toLocaleDateString('en-GB');
-        // Optional: Generate a unique ID for JS
-        // document.getElementById('js-id').textContent = Math.floor(Math.random() * 10000);
+        // 1. Auto-Date & ID
+        window.onload = function() {
+            // Taariikhda
+            const dateSpan = document.getElementById('current-date');
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            dateSpan.textContent = dd + '/' + mm + '/' + yyyy;
+
+            // Receipt ID (Waxaad ku badali kartaa backend-kaaga)
+            document.getElementById('receipt-id').textContent = Math.floor(Math.random() * 10000) + 1000;
+
+            // 2. Logic-ga Xogta (Xogtan adigaa beddelaya ama ka soo qaadanaya database)
+            const receiptData = {
+                guests: 4,
+                items: [
+                    { qty: 1, name: 'Bariis & Hilib Ari', price: 8.50 },
+                    { qty: 2, name: 'Shaah Cadays', price: 2.00 },
+                    { qty: 1, name: 'Biyo Dhal yar', price: 1.00 },
+                    { qty: 1, name: 'Moos & Canjeero', price: 3.50 }
+                ]
+            };
+
+            // 3. Buuxinta Miiska
+            const itemsBody = document.getElementById('items-body');
+            let subtotal = 0;
+
+            receiptData.items.forEach(item => {
+                const row = `<tr>
+                    <td class="col-qty">${item.qty}</td>
+                    <td class="col-item">${item.name}</td>
+                    <td class="col-price">$${item.price.toFixed(2)}</td>
+                </tr>`;
+                itemsBody.innerHTML += row;
+                subtotal += item.qty * item.price;
+            });
+
+            // 4. Tirada Dadka
+            document.getElementById('guest-count').textContent = receiptData.guests;
+
+            // 5. Total-ka Guud
+            document.getElementById('grand-total').textContent = '$' + subtotal.toFixed(2);
+
+            // 6. Si toos ah u fur daaqadda Print-ka
+            // window.print(); // Tani waa optional, haddii aad rabto inuu Print window-ga si toos ah u furmo markii boggu furmo.
+        };
     </script>
 
 </body>
